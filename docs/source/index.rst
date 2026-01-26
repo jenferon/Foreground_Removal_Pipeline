@@ -1,5 +1,5 @@
 .. fg_removal_pipe documentation master file, created by
-   sphinx-quickstart on Mon Jan 26 14:40:07 2026.
+   sphinx-quickstart on Mon Jan 26 15:42:23 2026.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
