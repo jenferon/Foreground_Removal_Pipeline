@@ -1,2 +1,13 @@
 # Foreground_Removal_Pipeline
-Code for the addition and removal of diffuse radio foregrounds and the analyse code to make power spectras of the output
+Foreground removal pipeline to process data from the SKAO data challenge 3a (https://sdc3.skao.int/challenges/foregrounds).
+
+Challenge brief:
+Our 'Foregrounds' challenge asks participants to remove obscuring sources of emission which prevent analysis of the underlying hydrogen-21cm signal from the Epoch of Reionisation. This foreground emission stems from both Galactic and extragalactic sources, both of which have previously observed, and unobserved components.
+
+Given the lack of a model for the finer structure of Galactic emission at SKA-LOW frequencies, the removal of Galactic emission from the dataset represents a significant challenge. By similar reasoning, source confusion from previously unknown extragalactic sources, especially at the coarser resolution at metre-wavelengths, complicates the matter further.
+
+From our synthetic datasets, participants are asked to extract the cylindrically-averaged power spectrum of the EoR signal, clean from foregrounds contamination. 
+
+A flowchart of our pipeline:
+
+![Alt text](images/updated_fg_pipeline.jpg)
