@@ -1,0 +1,23 @@
+[project]
+name = "fg_removal_pipe"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ "name" = "Jen Feron"}]
+maintainers = [{ "name" = "Jen Feron"}]
+
+description = 'This a foreground removal pipeline package for the analysis of 21 cm fits files during the Epoch of Reionisation and Cosmic Dawn.'
+dependencies = [
+	"jupyter",
+	"matplotlib",
+	"gpr4im",
+	"scikit-learn",
+]
+
+version = "0.0.1"
+
+[project.optional-dependencies]
+docs = ["numpydoc", "sphinx", "sphinx-book-theme"]
+test = ["pytest"]
+
+# Install for development
+dev = ["fg_removal_pipe[docs,test]"]
