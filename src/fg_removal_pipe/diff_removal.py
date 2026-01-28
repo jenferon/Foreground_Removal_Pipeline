@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.decomposition import FastICA
 from gpr4im import fg_tools as fg
+import GPy
 
 def fastica(data, comps, shape):
     """
