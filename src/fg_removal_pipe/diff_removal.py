@@ -1,9 +1,9 @@
 import numpy as np
 from sklearn.decomposition import FastICA
-from gpr4im import fg_tools as fg
-import GPy
+"""from gpr4im import fg_tools as fg
+import GPy"""
 
-def fastica(data, comps, shape):
+def fastica(data, comps):
     """
     Code to utilise the FastICA algorithm on 
     
