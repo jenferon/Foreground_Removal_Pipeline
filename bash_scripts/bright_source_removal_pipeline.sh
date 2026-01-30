@@ -52,7 +52,7 @@ wsclean -weight natural -size 1024 1024 -scale 32asec \
 -taper-gaussian 60 -taper-edge 100 -padding 2 -wstack-nwlayers 10000 \
 -wstack-oversampling 4095 -wstack-grid-mode kb -wstack-kernel-size  15 \
 -mgain 0.8 -niter 1000000 -auto-threshold 1 -auto-mask 4 \
--pol xx -temp-dir $temp -name initial_natural"$idx" -save-source-list temp.ms
+-pol xx -temp-dir $temp -name initial_natural"$idx" -save-source-list temp"$idx".ms
 
 #copy measurement set so can overwrite data column 
 cp -r temp"$idx".ms BSS/ZW3_BSS_0"$idx".ms
