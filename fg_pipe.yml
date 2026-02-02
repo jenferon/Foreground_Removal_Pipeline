@@ -1,0 +1,4 @@
+name: fg_pipeline_env
+channels:
+  - defaults
+prefix: /home/ppxjf3/miniconda3/envs/fg_pipeline_env
