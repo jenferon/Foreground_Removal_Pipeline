@@ -95,7 +95,7 @@ def powerspec_1d(data,kbins,frequency,FoV):
   return d, k, err
   
 
-def cyclindircal_powerspec(data, kbins):#, frequency, FoV):
+def cyclindircal_powerspec(data, kbins, axis=2):#, frequency, FoV):
   """
   Docstring for cyclindircal_powerspec
   
@@ -108,7 +108,7 @@ def cyclindircal_powerspec(data, kbins):#, frequency, FoV):
 
   #box_dims = find_box_dims(frequency, FoV)
   
-  pp, kper, kpar= t2c.power_spectrum_2d(data,  binning = 'linear', kbins=kbins, return_modes=False)
+  pp, kper, kpar= t2c.power_spectrum_2d(data,  binning = 'linear', kbins=kbins, nu_axis = axis, return_modes=False)
   """kper = np.asarray(kper, dtype=float)
   kpar = np.asarray(kpar, dtype=float)"""
 
