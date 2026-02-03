@@ -95,7 +95,7 @@ def powerspec_1d(data,kbins,frequency,FoV):
   return d, k, err
   
 
-def cyclindircal_powerspec(data, kbins, frequency, FoV):
+def cyclindircal_powerspec(data, kbins):#, frequency, FoV):
   """
   Docstring for cyclindircal_powerspec
   
@@ -103,11 +103,14 @@ def cyclindircal_powerspec(data, kbins, frequency, FoV):
   :param kbins: Description
   :param frequency: Description
   :param FoV: Description
+  kbins: 
   """
 
-  box_dims = find_box_dims(frequency, FoV)
+  #box_dims = find_box_dims(frequency, FoV)
   
-  pp, kper, kpar= t2c.power_spectrum_2d(data, kbins=kbins, box_dims=box_dims, return_modes=False)
+  pp, kper, kpar= t2c.power_spectrum_2d(data,  binning = 'linear', kbins=kbins, return_modes=False)
+  """kper = np.asarray(kper, dtype=float)
+  kpar = np.asarray(kpar, dtype=float)"""
 
   #normalise to dimensionless power spectrum
   for ii in range(0,len(kper)):
@@ -116,6 +119,7 @@ def cyclindircal_powerspec(data, kbins, frequency, FoV):
   
   fp = interpolate.interp2d(kper, kpar, pp.T, kind='linear')
   CC = fp(kper,kpar)
+  CC = np.asarray(CC, dtype=float)
   norm = colors.LogNorm(vmin=CC[np.isfinite(CC)].min(), vmax=CC[np.isfinite(CC)].max()) if plotting_scale['z']=='log' else None 
 
   return kper, kpar, CC, norm

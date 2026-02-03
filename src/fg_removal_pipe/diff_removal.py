@@ -46,20 +46,24 @@ def GPR(data, frequency):
     """
     #choose kernel
     # kernel for the smooth foreground:
-    kern_sfg = GPy.kern.RBF(1)
-    #mixing kernel
-    kern_mix = GPy.kern.Matern32(1)
-    #ex kernel
-    kern_ex = GPy.kern.Matern52(1)
-    # kernel for the HI cosmological signal:
+    kern_sky = GPy.kern.RBF(1)
+    #mixing kernels
+    kern_mix1 = GPy.kern.Matern32(1)
+    kern_mix2 = GPy.kern.Matern32(1)
+    #excess kernel
+    kern_ex = GPy.kern.RBF(1)
+    # kernel for the HI cosmological signal - change to learned if possible
     kern_21 = GPy.kern.Exponential(1)
+    #noise kernel
+    kern_noise = GPy.kern.WhiteHeteroscedastic(1, len(frequency))
     
     #set lengthscales to ensure the kernels fit to the correct part of the signal based on the data in Mertens et al (2020)
-    kern_sfg.lengthscale.constrain_bounded(10,100)
+    kern_sky.lengthscale.constrain_bounded(10,100)
+    kern_mix1.lengthscale.constrain_bounded(0.1,0.3)
+    kern_ex.lengthscale.constrain_bounded(0.2,0.5)
     kern_21.lengthscale.constrain_bounded(0.1,1.2)
-    kern_mix.lengthscale.constrain_bounded(1,10)
-    kern_ex.lengthscale.constrain_bounded(0.2,8)
-    kern_fg = kern_sfg + kern_ex + kern_mix
+    #kern_noise.lengthscale.constrain_bounded(1.2,1.9)
+    kern_fg = kern_sky + kern_mix1 + kern_mix2 + kern_ex + kern_noise
 
     gpr_result = fg.GPRclean(data, frequency, kern_fg, kern_21, NprePCA=0, num_restarts=10,
                                               noise_data=None, heteroscedastic=False, zero_noise=True, invert=False)
@@ -67,7 +71,7 @@ def GPR(data, frequency):
     model_gpr = gpr_result.fgfit 
     resids_gpr = data - model_gpr
 
-    return model_gpr, resids_gpr
+    return model_gpr, resids_gpr, gpr_result.res
 
 def bootstrap_fun(data, generator):
     """
