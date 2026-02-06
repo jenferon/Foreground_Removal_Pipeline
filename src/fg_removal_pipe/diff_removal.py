@@ -2,6 +2,8 @@ import numpy as np
 from sklearn.decomposition import FastICA
 from gpr4im import fg_tools as fg
 import GPy
+import pywt
+from scipy import stats
 
 def fastica(data, comps):
     """
@@ -123,3 +125,38 @@ def icasso(data, comp_num, distance, itter=100):
     resids = data - model
     
     return resids, model
+
+def GMCA(data, n_f, Dim, nbrScale):
+   
+
+    coeffs =np.zeros((n_f,Dim*Dim))
+    WT = np.zeros((n_f,Dim,Dim,nbrScale))
+    WTc_fine = np.zeros((n_f,Dim,Dim,3))
+    for ii in range (0,n_f):
+        coeffs1 = pywt.swt2(data[ii,:,:],'Haar',nbrScale,norm='True')
+        WTc = np.asarray(coeffs1) 
+        WTc_fine = WTc[:,1]
+        WT[ii,:,:,0] = WTc[0,0] + np.sum(WTc_fine[0],axis=0)
+        for jj in range(1,nbrScale):
+            WT[ii,:,:,jj] = np.sum(WTc_fine[jj],axis=0)
+
+      
+    all_WT = np.reshape(WT,(n_f,Dim*Dim*nbrScale))
+    # Compute GMCA
+
+    Results = g.GMCA(all_WT,maxts=20,n=n_com,mints=1,verb=0,nmax=100,UseP=0)
+    S = Results.get('sources')
+    A = Results.get('mixmat')
+
+    #S,A = g.GMCA(all_WT,n=4)
+    #S = transformer.fit_transform(all_WT)
+    #A = transformer.mixing_
+    X_WT = np.matmul(A,np.transpose(S))
+
+    X_WT = np.transpose(X_WT).reshape(n_f, npix,npix,nbrScale)
+
+    Residual_WT = all_WT-X_WT
+    Residual = np.sum(Residual_WT,3)
+    Model = np.sum(X_WT,3)
+
+    return Model, Residual
